@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Project | Haley Dynamic Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-hover: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #fafafa;
+            --text-muted: #888;
+            --accent: #00ff88;
+            --accent-dim: #00cc6a;
+            --error: #ff4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 480px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .section-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--accent);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        label .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        textarea {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            color: var(--text);
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #555;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 540px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent);
+            background: rgba(0, 255, 136, 0.02);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--accent);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .upload-zone input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            stroke: var(--text-muted);
+        }
+
+        .upload-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .file-list {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .file-tag {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-tag .remove {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .file-tag .remove:hover {
+            color: var(--error);
+        }
+
+        button[type="submit"] {
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 20px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: inherit;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 24px;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .progress-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .progress-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-text {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">HALEY DYNAMIC SYSTEMS</div>
+            <h1>Let's build something great.</h1>
+            <p class="subtitle">Fill out the details below and upload your assets. We'll take it from here.</p>
+        </header>
+
+        <form id="intakeForm" action="/" method="POST" enctype="multipart/form-data">
+            
+            <!-- Contact Info -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <span class="section-title">Contact Information</span>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>Business Name</label>
+                        <input type="text" name="business_name" required placeholder="Acme Corp">
+                    </div>
+                    <div class="field">
+                        <label>Your Name</label>
+                        <input type="text" name="contact_name" required placeholder="Jane Smith">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" name="contact_email" required placeholder="jane@acme.com">
+                    </div>
+                    <div class="field">
+                        <label>Phone <span class="optional">(optional)</span></label>
+                        <input type="tel" name="contact_phone" placeholder="(555) 123-4567">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Current Website <span class="optional">(if any)</span></label>
+                    <input type="url" name="website_url" placeholder="https://currentsite.com">
+                </div>
+            </div>
+
+            <!-- About the Business -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">02</span>
+                    <span class="section-title">About Your Business</span>
+                </div>
+                <div class="field">
+                    <label>What does your business do?</label>
+                    <textarea name="elevator_pitch" required placeholder="Give us the elevator pitch — what you do, who you serve, what makes you different."></textarea>
+                </div>
+                <div class="field">
+                    <label>Top Services or Products</label>
+                    <textarea name="services" placeholder="List your main offerings (3-5 is ideal)."></textarea>
+                </div>
+                <div class="field">
+                    <label>Who is your target audience?</label>
+                    <input type="text" name="audience" placeholder="e.g., Small business owners, homeowners in Dallas, tech startups">
+                </div>
+                <div class="field">
+                    <label>Competitors or Sites You Like <span class="optional">(optional)</span></label>
+                    <textarea name="competitors" rows="2" placeholder="Links to competitor sites or sites whose style you admire."></textarea>
+                </div>
+            </div>
+
+            <!-- Design Preferences -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <span class="section-title">Design Preferences</span>
+                </div>
+                <div class="field">
+                    <label>3 Words to Describe Your Brand</label>
+                    <input type="text" name="style_adjectives" placeholder="e.g., Bold, Modern, Trustworthy">
+                </div>
+                <div class="field">
+                    <label>Preferred Colors <span class="optional">(optional)</span></label>
+                    <input type="text" name="colors" placeholder="e.g., Navy blue, gold accents, clean whites">
+                </div>
+            </div>
+
+            <!-- Project Details -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">04</span>
+                    <span class="section-title">Project Details</span>
+                </div>
+                <div class="field">
+                    <label>What pages do you need?</label>
+                    <textarea name="pages_needed" placeholder="e.g., Home, About, Services, Contact, Gallery, FAQ"></textarea>
+                </div>
+                <div class="field">
+                    <label>Any special features? <span class="optional">(optional)</span></label>
+                    <textarea name="features" rows="2" placeholder="e.g., Online booking, contact form, newsletter signup, e-commerce"></textarea>
+                </div>
+                <div class="field">
+                    <label>Timeline / Deadline <span class="optional">(optional)</span></label>
+                    <input type="text" name="deadline" placeholder="e.g., Need it live by March 1st">
+                </div>
+            </div>
+
+            <!-- File Uploads -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">05</span>
+                    <span class="section-title">Your Assets</span>
+                </div>
+                <div class="field">
+                    <label>Upload Logo, Photos & Files</label>
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" name="photos" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <p class="upload-text">Drop files here or click to browse</p>
+                        <p class="upload-hint">Logo, product photos, team photos, anything helpful</p>
+                    </div>
+                    <div class="file-list" id="fileList"></div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-number">06</span>
+                    <span class="section-title">Anything Else?</span>
+                </div>
+                <div class="field">
+                    <label>Additional Notes <span class="optional">(optional)</span></label>
+                    <textarea name="additional_notes" placeholder="Anything else we should know? Specific requests, concerns, ideas..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit">Submit Project Info</button>
+        </form>
+
+        <p class="footer-note">Your information is secure and will only be used for your project.</p>
+    </div>
+
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="spinner"></div>
+        <p class="progress-text">Uploading your files...</p>
+    </div>
+
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const form = document.getElementById('intakeForm');
+        const progressOverlay = document.getElementById('progressOverlay');
+
+        let selectedFiles = [];
+
+        // Drag and drop handling
+        ['dragenter', 'dragover'].forEach(event => {
+            uploadZone.addEventListener(event, (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(event => {
+            uploadZone.addEventListener(event, (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+            });
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            const files = Array.from(e.dataTransfer.files);
+            addFiles(files);
+        });
+
+        fileInput.addEventListener('change', () => {
+            const files = Array.from(fileInput.files);
+            addFiles(files);
+        });
+
+        function addFiles(files) {
+            files.forEach(file => {
+                if (!selectedFiles.find(f => f.name === file.name)) {
+                    selectedFiles.push(file);
+                }
+            });
+            updateFileList();
+            updateInputFiles();
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+            updateInputFiles();
+        }
+
+        function updateFileList() {
+            fileList.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-tag">
+                    <span>${file.name}</span>
+                    <span class="remove" onclick="removeFile(${index})">×</span>
+                </div>
+            `).join('');
+        }
+
+        function updateInputFiles() {
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            fileInput.files = dt.files;
+        }
+
+        form.addEventListener('submit', () => {
+            progressOverlay.classList.add('active');
+        });
+    </script>
+</body>
+</html>
